@@ -113,3 +113,24 @@ def create_profile(name: str):
     else:
         console.print(f"[red]Error: {data.get('message')}[/red]")
 
+
+def export_profiles(fmt: str, gender, country):
+    params = {"format": fmt}
+    if gender: params["gender"] = gender
+    if country: params["country"] = country
+
+    with console.status("[cyan]Exporting profiles...[/cyan]"):
+        response = request("GET", "/api/profiles/export", params=params)
+
+    if not response:
+        return
+
+    filename = f"profiles_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
+    filepath = os.path.join(os.getcwd(), filename)
+
+    with open(filepath, "w", newline="", encoding="utf-8") as f:
+        f.write(response.text)
+
+    console.print(f"[green]Exported to {filepath}[/green]")
+
+
