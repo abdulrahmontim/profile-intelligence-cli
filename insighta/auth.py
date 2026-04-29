@@ -95,7 +95,8 @@ def login():
         console.print("[red]Login failed. No code received.[/red]")
         return
 
-    # Send code + verifier to backend CLI endpoint
+    console.print(f"[yellow]Posting to: {BASE_URL}/auth/cli/callback[/yellow]")
+    
     with console.status("[cyan]Completing login...[/cyan]"):
         response = httpx.post(
             f"{BASE_URL}/auth/cli/callback",
@@ -107,10 +108,10 @@ def login():
             timeout=15,
         )
 
-    if response.status_code != 200:
-        console.print("[red]Login failed. Try again.[/red]")
-        return
-
+        if response.status_code != 200:
+            console.print(f"[red]Login failed: {response.status_code} — {response.text}[/red]")
+            return
+        
     data = response.json()
 
     save_credentials({
