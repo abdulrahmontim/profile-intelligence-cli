@@ -59,7 +59,27 @@ def list_profiles(gender, country, age_group, min_age, max_age,
     )
 
 
+def get_profile(profile_id: str):
+    with console.status("[cyan]Fetching profile...[/cyan]"):
+        response = request("GET", f"/api/profiles/{profile_id}")
 
+    if not response:
+        return
+
+    if response.status_code == 404:
+        console.print("[red]Profile not found.[/red]")
+        return
+
+    p = response.json().get("data", {})
+
+    table = Table(show_header=False)
+    table.add_column("Field", style="bold cyan")
+    table.add_column("Value")
+
+    for key, value in p.items():
+        table.add_row(key, str(value))
+
+    console.print(table)
 
 
 
