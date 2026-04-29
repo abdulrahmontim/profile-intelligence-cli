@@ -107,9 +107,9 @@ def login():
             timeout=15,
         )
 
-    if response.status_code != 200:
-        console.print("[red]Login failed. Try again.[/red]")
-        return
+        if response.status_code != 200:
+            console.print(f"[red]Login failed: {response.status_code} — {response.text}[/red]")
+            return
 
     data = response.json()
 

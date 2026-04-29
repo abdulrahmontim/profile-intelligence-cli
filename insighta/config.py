@@ -20,7 +20,7 @@ def save_credentials(data):
 
 
 def load_credentials():
-    if CREDENTIALS_PATH.exist():
+    if CREDENTIALS_PATH.exists():
         with open(CREDENTIALS_PATH) as f:
             return json.load(f)
         
@@ -28,5 +28,5 @@ def load_credentials():
 
 
 def clear_credentials():
-    if CREDENTIALS_PATH.exist():
+    if CREDENTIALS_PATH.exists():
         CREDENTIALS_PATH.unlink()
