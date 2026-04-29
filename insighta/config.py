@@ -10,7 +10,7 @@ CREDENTIALS_PATH = Path.home() / ".insighta" / "credentials.json"
 
 BASE_URL = os.environ.get(
     "INSIGHTA_API_URL",
-    "https://profile-intelligence-api-production.up.railway.app"
+    "https://profile-intelligence-api.up.railway.app"
 )
 
 def save_credentials(data):
