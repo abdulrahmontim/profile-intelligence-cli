@@ -1,0 +1,5 @@
+click
+httpx
+rich
+python-dotenv
+flake8
