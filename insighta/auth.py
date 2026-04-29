@@ -95,7 +95,6 @@ def login():
         console.print("[red]Login failed. No code received.[/red]")
         return
 
-    # Send code + verifier to backend CLI endpoint
     with console.status("[cyan]Completing login...[/cyan]"):
         response = httpx.post(
             f"{BASE_URL}/auth/cli/callback",
