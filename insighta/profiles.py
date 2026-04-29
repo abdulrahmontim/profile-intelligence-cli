@@ -4,8 +4,9 @@ from rich.console import Console
 from rich.table import Table
 from .api import request
 
-console = Console()
 
+
+console = Console()
 
 def display_table(profiles: list):
     table = Table(show_header=True, header_style="bold cyan")
@@ -24,3 +25,44 @@ def display_table(profiles: list):
         )
 
     console.print(table)
+
+
+def list_profiles(gender, country, age_group, min_age, max_age,
+                  sort_by, order, page, limit):
+    params = {"page": page, "limit": limit}
+    if gender: params["gender"] = gender
+    if country: params["country"] = country
+    if age_group: params["age_group"] = age_group
+    if min_age: params["min_age"] = min_age
+    if max_age: params["max_age"] = max_age
+    if sort_by: params["sort_by"] = sort_by
+    if order: params["order"] = order
+
+    with console.status("[cyan]Fetching profiles...[/cyan]"):
+        response = request("GET", "/api/profiles", params=params)
+
+    if not response:
+        return
+
+    data = response.json()
+    profiles = data.get("data", [])
+
+    if not profiles:
+        console.print("[yellow]No profiles found.[/yellow]")
+        return
+
+    display_table(profiles)
+    console.print(
+        f"\nPage [bold]{data.get('page')}[/bold] of "
+        f"[bold]{data.get('total_pages')}[/bold] | "
+        f"Total: [bold]{data.get('total')}[/bold]"
+    )
+
+
+
+
+
+
+
+
+
