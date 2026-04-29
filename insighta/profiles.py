@@ -98,5 +98,18 @@ def search_profiles(query: str):
     display_table(profiles)
 
 
+def create_profile(name: str):
+    with console.status(f"[cyan]Creating profile for '{name}'...[/cyan]"):
+        response = request("POST", "/api/profiles", json={"name": name})
 
+    if not response:
+        return
+
+    data = response.json()
+
+    if data.get("status") == "success":
+        console.print("[green]Profile created successfully.[/green]")
+        get_profile(data["data"]["id"])
+    else:
+        console.print(f"[red]Error: {data.get('message')}[/red]")
 
