@@ -88,14 +88,13 @@ def login():
     server.server_close()
 
     if "error" in result:
-        console.print(f"[red]Login failed: {result['error']}[/red]")
+        console.print(f"[red]Login failed[/red]")
         return
 
     if not result.get("code"):
         console.print("[red]Login failed. No code received.[/red]")
         return
 
-    console.print(f"[yellow]Posting to: {BASE_URL}/auth/cli/callback[/yellow]")
     
     with console.status("[cyan]Completing login...[/cyan]"):
         response = httpx.post(
