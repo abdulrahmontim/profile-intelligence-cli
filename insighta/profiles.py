@@ -82,6 +82,20 @@ def get_profile(profile_id: str):
     console.print(table)
 
 
+def search_profiles(query: str):
+    with console.status("[cyan]Searching...[/cyan]"):
+        response = request("GET", "/api/profiles/search", params={"q": query})
+
+    if not response:
+        return
+
+    profiles = response.json().get("data", [])
+
+    if not profiles:
+        console.print("[yellow]No results found.[/yellow]")
+        return
+
+    display_table(profiles)
 
 
 
