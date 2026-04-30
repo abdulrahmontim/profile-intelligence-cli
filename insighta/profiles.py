@@ -9,8 +9,8 @@ from .api import request
 console = Console()
 
 def display_table(profiles: list):
-    table = Table(show_header=True, header_style="bold cyan")
-    for col in ["ID", "Name", "Gender", "Age", "Age Group", "Country", "Created At"]:
+    table = Table(show_header=True, header_style="bold cyan", expand=True, width=console.width)
+    for col in ["ID", "Name", "Gender", "Age", "Age Group", "Country", "Country Code", "Created At"]:
         table.add_column(col)
 
     for p in profiles:
@@ -21,6 +21,7 @@ def display_table(profiles: list):
             str(p.get("age", "")),
             p.get("age_group", ""),
             p.get("country_name", ""),
+            p.get("country_id", ""),
             p.get("created_at", ""),
         )
 
